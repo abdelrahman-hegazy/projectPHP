@@ -126,6 +126,25 @@ class DB_Functions {
  
         return $hash;
     }
+    public function isProductExisted($price) {
+        $stmt = $this->conn->prepare("SELECT price from save WHERE price = ?");
+ 
+        $stmt->bind_param("s", $price);
+ 
+        $stmt->execute();
+ 
+        $stmt->store_result();
+ 
+        if ($stmt->num_rows > 0) {
+            // user existed 
+            $stmt->close();
+            return true;
+        } else {
+            // user not existed
+            $stmt->close();
+            return false;
+        }
+    }
  
 }
  
